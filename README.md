@@ -12,7 +12,7 @@ Deployed to GitHub Pages.
 
 This repository now includes a GitHub Actions workflow at:
 
-- `/home/runner/work/un-construct-blog/un-construct-blog/lumpyspaceprogrammer/un-construct-blog/.github/workflows/pages.yml`
+- `.github/workflows/pages.yml`
 
 To finish setup in GitHub:
 
