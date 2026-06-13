@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUY THIS NOT THAT | UN-CONSTRUCT</title>
+    <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --text-color: #e0e0e0;
+            --accent-color: #00ff9d;
+            --secondary-accent: #ff00ff;
+            --warning-red: #ff4d4d;
+            --font-main: 'Courier New', Courier, monospace;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        header {
+            padding: 2rem;
+            border-bottom: 2px solid var(--accent-color);
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            text-shadow: 2px 2px var(--secondary-accent);
+        }
+        nav { margin-top: 1rem; }
+        nav a { color: var(--text-color); text-decoration: none; margin: 0 1rem; text-transform: uppercase; font-weight: bold; }
+        nav a:hover { color: var(--accent-color); }
+        
+        main {
+            padding: 2rem;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            border: 1px solid #333;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .card.not-that {
+            border-top: 5px solid var(--warning-red);
+            background: rgba(255, 77, 77, 0.05);
+        }
+
+        .card.buy-this {
+            border-top: 5px solid var(--accent-color);
+            background: rgba(0, 255, 157, 0.05);
+        }
+
+        .label {
+            position: absolute;
+            top: -12px;
+            left: 10px;
+            background: var(--bg-color);
+            padding: 0 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .not-that .label { color: var(--warning-red); }
+        .buy-this .label { color: var(--accent-color); }
+
+        .price-tag {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            display: block;
+        }
+
+        .impact-list {
+            list-style: none;
+            padding: 0;
+            font-size: 0.85rem;
+        }
+
+        .impact-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .not-that .impact-list li::before { content: "×"; position: absolute; left: 0; color: var(--warning-red); }
+        .buy-this .impact-list li::before { content: "✓"; position: absolute; left: 0; color: var(--accent-color); }
+
+        .vs-divider {
+            grid-column: 1 / -1;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-accent);
+            margin: 1rem 0;
+            letter-spacing: 0.5rem;
+        }
+
+        .editorial-intro {
+            border-left: 2px solid var(--secondary-accent);
+            padding-left: 1.5rem;
+            margin-bottom: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>BUY THIS / NOT THAT</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="posts.html">Posts</a>
+            <a href="buy-this-not-that.html">Alternatives</a>
+            <a href="about.html">About</a>
+        </nav>
+    </header>
+    <main>
+        <div class="editorial-intro">
+            <h2>The Math of the Machine.</h2>
+            <p>They want you to think $12 for a sweater is a win. It's not. It's a loan against the planet's future with a 10,000% interest rate. We've done the audit. Here is the reality of the "Cheap" vs. the "Real."</p>
+        </div>
+
+        <div class="comparison-grid">
+            <!-- ITEM 1 -->
+            <div class="card not-that">
+                <span class="label">Not That</span>
+                <h3>The "Ultra-Fast" Poly-Blend Tee</h3>
+                <span class="price-tag">$7.99 @ Shein / Temu</span>
+                <ul class="impact-list">
+                    <li>100% Microplastic-shedding Polyester</li>
+                    <li>Unknown labor standards in opaque supply chains</li>
+                    <li>Designed to lose shape after 3 washes</li>
+                    <li>Non-recyclable landfill fodder</li>
+                </ul>
+            </div>
+
+            <div class="card buy-this">
+                <span class="label">Buy This</span>
+                <h3>Organic Hemp Boxy Tee</h3>
+                <span class="price-tag">$45.00 @ Jungmaven (or similar indie)</span>
+                <ul class="impact-list">
+                    <li>Carbon-sequestering Hemp + Organic Cotton</li>
+                    <li>Fair-wage production in the USA</li>
+                    <li>Grows softer with age; lasts a decade</li>
+                    <li>Fully biodegradable at end of life</li>
+                </ul>
+            </div>
+
+            <div class="vs-divider">VS</div>
+
+            <!-- ITEM 2 -->
+            <div class="card not-that">
+                <span class="label">Not That</span>
+                <h3>The Trend-Cycle Trench</h3>
+                <span class="price-tag">$24.00 @ Amazon Basics</span>
+                <ul class="impact-list">
+                    <li>Petroleum-based synthetic fibers</li>
+                    <li>Mass-produced in sweatshop conditions</li>
+                    <li>Chemical-heavy dyes leaching into water</li>
+                    <li>Supporting the monopoly death-star</li>
+                </ul>
+            </div>
+
+            <div class="card buy-this">
+                <span class="label">Buy This</span>
+                <h3>Vintage Burberry / Thrifted Gabardine</h3>
+                <span class="price-tag">$60.00 - $120.00 @ Local Thrift / Depop</span>
+                <ul class="impact-list">
+                    <li>Zero new resources consumed</li>
+                    <li>High-density natural fiber weave</li>
+                    <li>Superior craftsmanship and classic silhouette</li>
+                    <li>Directly diverts waste from landfills</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
