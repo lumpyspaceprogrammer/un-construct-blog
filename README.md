@@ -9,3 +9,13 @@ Anti-consumerist editorial blog for Shannon Byrne.
 
 ## Deployment
 Deployed to GitHub Pages.
+
+This repository now includes a GitHub Actions workflow at:
+
+- `/home/runner/work/un-construct-blog/un-construct-blog/lumpyspaceprogrammer/un-construct-blog/.github/workflows/pages.yml`
+
+To finish setup in GitHub:
+
+1. Go to **Settings → Pages**
+2. Set **Source** to **GitHub Actions**
+3. Push to `main` (or run the workflow manually)
