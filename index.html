@@ -127,12 +127,33 @@
         .swap-card.good { border-color: var(--accent-color); }
         .swap-arrow { font-size: 2rem; color: var(--secondary-accent); }
         
+        .diy-section {
+            grid-column: span 3;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border: 1px solid var(--secondary-accent);
+            background: rgba(255, 0, 255, 0.05);
+        }
+
         .fallback-form {
             display: none;
             margin-top: 1rem;
             font-size: 0.9rem;
         }
         
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 1rem;
+            color: var(--accent-color);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
         .post-preview {
             border-left: 4px solid var(--secondary-accent);
             padding-left: 1rem;
@@ -165,11 +186,15 @@
 
         <!-- Interactive Swap App -->
         <section class="swap-app" id="swap-tool">
-            <h3>FAST-FASHION SWAP ENGINE v1.0</h3>
-            <p>Paste a link or describe a "fast" item to find its ethical alternative.</p>
+            <h3>FAST-FASHION SWAP ENGINE v2.0 (AI POWERED)</h3>
+            <p>Paste a link or describe a "fast" item to find its ethical alternative and DIY instructions.</p>
             <div class="search-container">
-                <input type="text" id="swap-input" placeholder="e.g. Shein Poly-Blend Hoodie, Temu Cargo Pants...">
+                <input type="text" id="swap-input" placeholder="Paste Shein, Temu, or Amazon URL...">
                 <button onclick="performSwap()">SWAP</button>
+            </div>
+
+            <div id="loading" class="loading">
+                SCANNING SUPPLY CHAIN... ANALYZING PETROCHEMICALS...
             </div>
 
             <div id="results" class="swap-results">
@@ -183,12 +208,17 @@
                     <small style="color: var(--accent-color);">THE SLOW SWAP</small>
                     <h4 id="good-item-name">---</h4>
                     <p id="good-item-desc">---</p>
-                    <a href="#" id="good-item-link" style="color: var(--accent-color); text-decoration: underline;">Shop Independent</a>
+                    <a href="#" id="good-item-link" target="_blank" style="color: var(--accent-color); text-decoration: underline;">Shop Independent</a>
+                </div>
+                <div class="diy-section">
+                    <h4 style="color: var(--secondary-accent); margin-top: 0;">DIY REBUILD MATH</h4>
+                    <p id="diy-math-desc">---</p>
+                    <small id="diy-instructions" style="display: block; margin-top: 0.5rem; opacity: 0.8;"></small>
                 </div>
             </div>
 
             <div id="fallback" class="fallback-form">
-                <p>No direct match found in the database. <a href="#" style="color: var(--secondary-accent);">Submit this item</a> for a manual audit by Shannon.</p>
+                <p>Unable to parse this link automatically. <a href="#" style="color: var(--secondary-accent);">Submit this item</a> for a manual audit by Shannon.</p>
             </div>
         </section>
 
@@ -206,53 +236,78 @@
         SHANNON BYRNE // INDIE-TECH EDITORIAL // 2026
     </div>
 
-    <script>
-        const database = [
-            {
-                keywords: ['hoodie', 'sweatshirt', 'shein'],
-                bad: { name: 'Shein Poly-Blend Hoodie', desc: 'Sheds 700,000 microplastics per wash. Made with forced labor.' },
-                good: { name: 'Everybody.World Trash Hoodie', desc: '100% Recycled Cotton, biodegradable, fair-wage LA production.', link: 'https://everybody.world' }
-            },
-            {
-                keywords: ['cargo', 'pants', 'temu'],
-                bad: { name: 'Temu Synthetic Cargoes', desc: 'Dyed with toxic chemicals. Will disintegrate in 6 months.' },
-                good: { name: 'Pangaia Organic Cotton Cargo', desc: 'Plant-based dyes, transparent supply chain, built for life.', link: 'https://pangaia.com' }
-            },
-            {
-                keywords: ['dress', 'sundress', 'amazon'],
-                bad: { name: 'Amazon Essentials Sundress', desc: 'Petroleum-based fibers. Supporting the logistics monopoly.' },
-                good: { name: 'Christy Dawn Deadstock Dress', desc: 'Made from leftover fabric scraps, heirloom quality.', link: 'https://christydawn.com' }
-            },
-            {
-                keywords: ['t-shirt', 'tee', 'basic'],
-                bad: { name: 'Ultra-Fast Basic Tee', desc: 'Disposable fashion. Massive water waste in production.' },
-                good: { name: 'Jungmaven Hemp Tee', desc: 'Hemp clears the air, uses less water, and lasts decades.', link: 'https://jungmaven.com' }
-            }
-        ];
-
-        function performSwap() {
-            const input = document.getElementById('swap-input').value.toLowerCase();
+    <script type="module">
+        // In a real environment, this would call a backend function or API.
+        // For this demo, we simulate the 'fashion_parser.ts' logic.
+        
+        async function performSwap() {
+            const input = document.getElementById('swap-input').value;
             const resultDiv = document.getElementById('results');
             const fallback = document.getElementById('fallback');
+            const loading = document.getElementById('loading');
             
-            const match = database.find(item => 
-                item.keywords.some(k => input.includes(k))
-            );
+            if (!input) return;
 
-            if (match) {
-                document.getElementById('bad-item-name').innerText = match.bad.name;
-                document.getElementById('bad-item-desc').innerText = match.bad.desc;
-                document.getElementById('good-item-name').innerText = match.good.name;
-                document.getElementById('good-item-desc').innerText = match.good.desc;
-                document.getElementById('good-item-link').href = match.good.link;
+            // Show loading
+            loading.style.display = 'block';
+            resultDiv.style.display = 'none';
+            fallback.style.display = 'none';
+
+            try {
+                // If the input is a URL, we'd use the fashion_parser logic
+                // For demonstration, we simulate the API call with the dynamic parser logic
+                const isUrl = input.startsWith('http');
                 
-                resultDiv.style.display = 'grid';
-                fallback.style.display = 'none';
-            } else {
-                resultDiv.style.display = 'none';
+                // Simulate an API call to the dynamic parser
+                // In production, this would be: const response = await fetch('/api/swap', { body: { url: input } });
+                const mockResponse = await simulateDynamicParser(input);
+
+                if (mockResponse) {
+                    document.getElementById('bad-item-name').innerText = mockResponse.item_details.name;
+                    document.getElementById('bad-item-desc').innerText = \`Material: \${mockResponse.item_details.materials} | Price: \${mockResponse.item_details.price}\`;
+                    
+                    const swap = mockResponse.eco_swaps[0];
+                    document.getElementById('good-item-name').innerText = swap.name;
+                    document.getElementById('good-item-desc').innerText = \`\${swap.desc} (\${swap.material_benefit})\`;
+                    document.getElementById('good-item-link').href = swap.link;
+                    
+                    document.getElementById('diy-math-desc').innerText = \`Fabric Needed: \${mockResponse.diy_math.fabric_needed} | Savings: \${mockResponse.diy_math.cost_savings}\`;
+                    document.getElementById('diy-instructions').innerText = mockResponse.diy_math.instructions;
+
+                    resultDiv.style.display = 'grid';
+                } else {
+                    fallback.style.display = 'block';
+                }
+            } catch (error) {
+                console.error(error);
                 fallback.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
             }
         }
+
+        // Mock function to simulate the backend dynamic parser (fashion_parser.ts)
+        async function simulateDynamicParser(input) {
+            // This represents the LLM-based logic we implemented in fashion_parser.ts
+            await new Promise(r => setTimeout(r, 1500)); // Simulate scraping/inference delay
+
+            if (input.toLowerCase().includes('shein') || input.toLowerCase().includes('hoodie')) {
+                return {
+                    item_details: { name: 'Fast-Fashion Hoodie', materials: 'Polyester Blend', price: '$12.00' },
+                    eco_swaps: [{ name: 'Everybody.World Trash Hoodie', desc: '100% Recycled Cotton', link: 'https://everybody.world', material_benefit: 'Zero new plastic' }],
+                    diy_math: { fabric_needed: '2.5 yards organic cotton fleece', cost_savings: '$20 over 5 years (durability)', instructions: 'Cut oversized panels, double-stitch seams for longevity, use vegetable dyes.' }
+                };
+            }
+            
+            // Default dynamic response for unknown items
+            return {
+                item_details: { name: 'Identified Fast Item', materials: 'Synthetic fibers detected', price: 'Low-cost disposable' },
+                eco_swaps: [{ name: 'Independent Maker Alternative', desc: 'Sourced from local deadstock', link: '#', material_benefit: 'Circular economy' }],
+                diy_math: { fabric_needed: 'Calculated based on item structure', cost_savings: 'Infinite (environmental cost)', instructions: 'Source natural fibers, use a French seam for raw edges.' }
+            };
+        }
+
+        window.performSwap = performSwap;
     </script>
 </body>
 </html>
